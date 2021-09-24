@@ -29,13 +29,7 @@ const Login = (props) => {
             const token = data["access_token"]
             const user = data["user"]
             auth.userLogin(token, user)
-            // if (user.role === "admin"){
-            //     props.history.push("/home/init")
-            // }
-            // else{
-            //     props.history.push("/home/article/entry")
-            // }
-            console.log(user,token);
+            props.history.push("/home/credits");
         });
     }
 

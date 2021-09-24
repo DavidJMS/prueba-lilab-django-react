@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { Link } from "react-router-dom";
 
 import PageLoading from "../shared/PageLoading";
+import CreditList from '../list/CreditList';
 
 class Credit extends React.Component {
 
@@ -13,7 +14,7 @@ class Credit extends React.Component {
             loading: true,
             error: null,
             data: undefined,
-            storeId: 0
+            creditId: 0
         }
     }
 
@@ -29,7 +30,7 @@ class Credit extends React.Component {
     fetchData = async () =>{
         this.setState({loading:true, error:null});
         try{
-            fetch("http://127.0.0.1:8000/api/storehouse/",{
+            fetch("http://127.0.0.1:8000/api/credits/",{
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,12 +49,12 @@ class Credit extends React.Component {
     }
 
     handlerDelete = (elemento) =>{
-        this.setState({StoreId:elemento},
+        this.setState({creditId:elemento},
             this.fetchDelete);
     }
 
     fetchDelete = async () =>{
-        const id = this.state.StoreId
+        const id = this.state.creditId;
         this.setState({loading:true});
 
         fetch(`http://127.0.0.1:8000/api/storehouse/${id}/`,{
@@ -99,15 +100,15 @@ class Credit extends React.Component {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h3 className="text-center">Tiendas</h3>
-                            <Link to={"new"}>
+                            <h3 className="text-center">Creditos</h3>
+                            <Link to={"credits/new"}>
                                 <button className="btn btn-success btn-add-success"><span><i className="fas fa-plus-square"></i></span></button>
                             </Link>
                         </div>
                         {/* /.card-header */}
                         <div className="card-body table-responsive p-0">
-                            <StoreList 
-                            Store={this.state.data}
+                            <CreditList 
+                            Credit={this.state.data}
                             handlerDelete={this.handlerDelete}
                             />
                         </div>
