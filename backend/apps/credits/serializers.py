@@ -5,6 +5,9 @@ from rest_framework import serializers
 # My Models
 from apps.credits.models import Credit
 
+# Utilities
+import random
+
 class CreditModelSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -20,7 +23,14 @@ class CreateCreditModelSerializer(serializers.ModelSerializer):
         fields = ["names","total_debt","qualification_debtor"]
     
     def create(self, data):
-        instance = Credit.objects.create(score=0,**data)
+        score:int = 0
+        if data["qualification_debtor"] == "malo":
+            score = random.randint(1,4)
+        if data["qualification_debtor"] == "regular":
+            score = random.randint(5,7)
+        if data["qualification_debtor"] == "bueno":
+            score = random.randint(8,10)
+        instance = Credit.objects.create(score=score,status="por evaluar",**data)
         return instance
 
 class CheckingCredit(serializers.Serializer):
