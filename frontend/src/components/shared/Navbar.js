@@ -89,7 +89,6 @@ class Navbar extends React.Component {
                 <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 {/* Brand Logo */}
                 <a href="index3.html" className="brand-link text-center">
-                    {/* <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} /> */}
                     <span>World Market</span>
                 </a>
                 {/* Sidebar */}
@@ -100,7 +99,7 @@ class Navbar extends React.Component {
                         {/* <img src={this.state.avatarUrl} className="img-circle elevation-2" alt="User Image" /> */}
                     </div>
                     <div className="info">
-                        {/* <p className="user"> {this.props.user.first_name} {this.props.user.last_name}</p> */}
+                        <p className="user"> {this.props.user.first_name} {this.props.user.last_name}</p>
                     </div>
                     </div>
                     {/* Sidebar Menu */}

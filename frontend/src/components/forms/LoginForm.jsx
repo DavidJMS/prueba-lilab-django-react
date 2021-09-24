@@ -1,15 +1,14 @@
 import React from 'react';
 
 import '../styles/loginform.css';
-import Logo from '../../img/login/logo_edited.jpg';
 
 class LoginForm extends React.Component {
 
     render(){
         return(
             <div className="container__form__login animate__animated animate__backInDown">
+                <h2>Login</h2>
                 <form className="form">
-                    <img src={Logo} alt="" />
                     <div className="card-body">
                     <div className="form-group">
                         <input type="text" className="form-control"  placeholder="User" value={this.props.credentials["username"]} name="username" onChange={this.props.handlerChange}/>
