@@ -3,18 +3,19 @@ import React from "react";
 class CreditItem extends React.Component {
     render() {
       
-      let id = this.props.store.id
+      let id = this.props.credit.id
 
       return (
         <tr key={id}>
           <td>{id}</td>
-          <td>{this.props.store.names}</td>
-          <td>{this.props.store.total_debt}</td>
-          <td>{this.props.store.qualification_debtor}</td>
-          <td>{this.props.store.score}</td>
+          <td>{this.props.credit.names}</td>
+          <td>{this.props.credit.total_debt}</td>
+          <td>{this.props.credit.qualification_debtor}</td>
+          <td>{this.props.credit.score}</td>
+          <td>{this.props.credit.status}</td>
           <td>
-                <button className="btn btn-primary mr-1"><i class="fas fa-check"></i></button>
-                <button onClick={this.props.handlerDelete.bind(this,id)} className="btn btn-danger ml-1"><i class="fas fa-window-close"></i></button>
+                <button onClick={this.props.handlerStatus.bind(this,id,"aprobado")} className="btn btn-primary mr-1"><i class="fas fa-check"></i></button>
+                <button onClick={this.props.handlerStatus.bind(this,id,"denegado")} className="btn btn-danger ml-1"><i class="fas fa-window-close"></i></button>
           </td>
         </tr>
       );
@@ -33,14 +34,15 @@ class CreditItem extends React.Component {
             <th>Puntuación de deudor</th>
             <th>Calificación</th>
             <th>Estado</th>
+            <th>Acción</th>
             </tr>
         </thead>
         <tbody>
-          {Credit.map(store => {
+          {Credit.map(credit => {
             return(
               <CreditItem 
-              store={store} 
-              handlerDelete={props.handlerDelete}
+              credit={credit} 
+              handlerStatus={props.handlerStatus}
               />
             );
           })}

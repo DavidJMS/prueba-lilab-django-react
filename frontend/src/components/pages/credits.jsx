@@ -14,7 +14,10 @@ class Credit extends React.Component {
             loading: true,
             error: null,
             data: undefined,
-            creditId: 0
+
+            // Handler Status Data
+            creditId: 0,
+            status:""
         }
     }
 
@@ -48,27 +51,34 @@ class Credit extends React.Component {
 
     }
 
-    handlerDelete = (elemento) =>{
-        this.setState({creditId:elemento},
-            this.fetchDelete);
+    handlerStatus = (id, status) =>{
+        this.setState({
+            creditId:id,
+            status:status
+        },
+        this.fetchStatus);
     }
 
-    fetchDelete = async () =>{
-        const id = this.state.creditId;
+    fetchStatus = async () =>{
+        const data = {
+            id: this.state.creditId,
+            status: this.state.status
+        };
         this.setState({loading:true});
 
-        fetch(`http://127.0.0.1:8000/api/storehouse/${id}/`,{
-            method: 'DELETE',
+        fetch(`http://127.0.0.1:8000/api/credits/checking/`,{
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization:`Token ${this.props.token}`
-                }
+                },
+            body: JSON.stringify(data)
             })
         .then(response => {
             if (response.ok){
                 this.setState({loading:false});
                 Swal.fire({
-                    title: 'Eliminado',
+                    title: 'Realizado!',
                     icon: 'success',
                     confirmButtonText: 'Entendido'
                 })
@@ -109,7 +119,7 @@ class Credit extends React.Component {
                         <div className="card-body table-responsive p-0">
                             <CreditList 
                             Credit={this.state.data}
-                            handlerDelete={this.handlerDelete}
+                            handlerStatus={this.handlerStatus}
                             />
                         </div>
                         {/* /.card-body */}
