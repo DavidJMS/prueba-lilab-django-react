@@ -25,22 +25,23 @@ class CreditViewSet(mixins.ListModelMixin,
     """
 
     queryset = Credit.objects.all()
-    serializer_class = serializers.StoreHouseModelSerializer
+    serializer_class = serializers.CreditModelSerializer
     
-    def check_permissions(self, request):
+    def get_permissions(self):
         """
-            Check if the request should be permitted.
-            Raises an appropriate exception if the request is not permitted.
+            Instantiates and returns the list of permissions that this view requires.
         """
-        total_permissions = self.get_permissions()
-        not_permissions = len(total_permissions)
-        for permission in total_permissions:
-            if not permission.has_permission(request, self):
-                not_permissions -=1
-            
-        if not_permissions == 0:    
-            self.permission_denied(
-                request,
-                message=getattr(permission, 'message', None),
-                code=getattr(permission, 'code', None)
-            )
+        permission_classes:list = []
+        # import pdb; pdb.set_trace()
+        if self.action in ["list","create"]:
+            permission_classes.append(IsAuthenticated)
+        else:
+            permission_classes.append(IsAdminUser)
+        return [permission() for permission in permission_classes]
+
+    def create(self, request, *args, **kwargs):
+        serializer = serializers.CreateCreditModelSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
